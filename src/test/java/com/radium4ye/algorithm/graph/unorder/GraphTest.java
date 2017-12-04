@@ -37,7 +37,7 @@ public class GraphTest {
 
         System.out.println(graph.toString());
 
-        assertEquals(graph.vertices(), 7);
+        assertEquals(graph.vertices(), 8);
         assertEquals(graph.getEdge(), 10);
     }
 
@@ -45,17 +45,32 @@ public class GraphTest {
     public void dfs() {
         DepthFirstSearch search = new DepthFirstSearch(graph, 0);
 
-//        assertEquals(search.getVerticesCount(),0);
         assertEquals(search.hasPathTo(8), true);
 
-        java.util.Stack<Integer> stack = search.pathTo(8);
+        java.util.Stack<Integer> stack = search.pathTo(9);
         int[] temp = new int[stack.size()];
         int point = 0;
         while (!stack.empty()) {
             temp[point++] = stack.pop();
         }
 
-        assertArrayEquals(temp, new int[]{0, 1, 2, 5, 6, 7, 8});
+        assertArrayEquals(temp, new int[]{0, 1, 2, 5, 6, 7, 8, 9});
+    }
+
+    @Test
+    public void bfs() {
+        BreadthFirstSearch search = new BreadthFirstSearch(graph, 0);
+
+        assertEquals(search.hasPathTo(8), true);
+
+        java.util.Stack<Integer> stack = search.pathTo(9);
+        int[] temp = new int[stack.size()];
+        int point = 0;
+        while (!stack.empty()) {
+            temp[point++] = stack.pop();
+        }
+
+        assertArrayEquals(temp, new int[]{0, 1, 2, 5, 6, 9});
     }
 
 }

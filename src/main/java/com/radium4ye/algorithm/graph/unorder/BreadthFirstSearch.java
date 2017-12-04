@@ -32,17 +32,27 @@ public class BreadthFirstSearch extends BaseSearch{
      * @param vertices  检查的节点
      */
     private void bfs(Graph graph, int vertices) {
+        //构建队列，添加起始节点
         Queue<Integer> queue = new LinkedBlockingQueue<>();
+        queue.add(vertices);
 
         //当前正在检查的节点
         Integer nowVertices;
-        while ((nowVertices = queue.remove()) != null) {
+        //上一个节点
+        Integer lastVertices = null;
+        while (!queue.isEmpty()) {
+            nowVertices = queue.remove();
 
             //如果该顶点没被检查过 就继续
             if (!marked.getOrDefault(nowVertices, false)) {
                 //设置该点已被检查过了
                 marked.put(nowVertices, true);
                 queue.addAll(graph.adj(nowVertices));
+
+                edgeTo.put(nowVertices,lastVertices);
+                //记录上一个节点
+                lastVertices = nowVertices;
+
             }
 
         }
