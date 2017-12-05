@@ -10,7 +10,7 @@ import java.util.Iterator;
  * @author radium4ye
  */
 @Data
-public class Bag<Item> extends MyCollection<Item> implements Iterable<Item> {
+public class Bag<Item> extends AbstractMyCollection<Item> implements Iterable<Item> {
 
     /**
      * 链表首结点
@@ -22,7 +22,8 @@ public class Bag<Item> extends MyCollection<Item> implements Iterable<Item> {
      *
      * @param item 元素
      */
-    public void add(Item item) {
+    @Override
+    public boolean add(Item item) {
         //创建一个节点
         Node<Item> node = new Node<>();
         node.setItem(item);
@@ -35,6 +36,7 @@ public class Bag<Item> extends MyCollection<Item> implements Iterable<Item> {
         //重新设置首节点，并修改集合大小
         first = node;
         count++;
+        return true;
     }
 
     /**

@@ -2,13 +2,16 @@ package com.radium4ye.structure;
 
 import lombok.Data;
 
-import java.util.EmptyStackException;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Queue;
 
 /**
- * @author Radium
+ * 简易队列
+ *
+ * @author radium4ye
  */
-public class Stack<Item> extends AbstractMyCollection<Item> implements Iterable<Item> {
+public class MyQueue<Item> extends AbstractMyCollection<Item> implements Queue<Item>, Iterable<Item> {
 
     /**
      * 链表首结点
@@ -20,35 +23,98 @@ public class Stack<Item> extends AbstractMyCollection<Item> implements Iterable<
      *
      * @param item 元素
      */
-    public void push(Item item) {
+    @Override
+    public boolean add(Item item) {
         //创建一个节点
         Node<Item> node = new Node<>();
         node.setItem(item);
 
         //如果集合首节点不会空，就将新的节点指向该结点
-        if (first != null) {
-            node.setNext(first);
+        if (first == null) {
+            first = node;
+        } else {
+            Node<Item> lastNode = first;
+            while (lastNode.getNext() != null) {
+                lastNode = lastNode.getNext();
+            }
+            lastNode.setNext(node);
         }
 
         //重新设置首节点，并修改集合大小
         count++;
-        first = node;
+
+        return true;
     }
 
     /**
-     * 弹出一个元素
-     *
-     * @return 栈顶的元素
+     * @see #add(Object)
      */
-    public Item pop() {
+    @Override
+    public boolean offer(Item item) {
+        return add(item);
+    }
+
+    /**
+     * 移除元素
+     *
+     * @return 移除队列首都的元素
+     * @see #poll()
+     */
+    @Override
+    public Item remove() {
+        Item item = poll();
+        if (item == null) {
+            throw new NoSuchElementException();
+        }
+
+        return item;
+    }
+
+    /**
+     * 移除元素
+     *
+     * @return 移除队列首都的元素
+     */
+    @Override
+    public Item poll() {
         if (first == null) {
-            throw new EmptyStackException();
+            return null;
         }
 
         Item item = first.getItem();
         first = first.getNext();
         count--;
         return item;
+    }
+
+    /**
+     * 获取首部元素
+     *
+     * @return 队列首部元素
+     * @see #peek()
+     */
+    @Override
+    public Item element() {
+        Item item = peek();
+        if (item == null) {
+            throw new NoSuchElementException();
+        }
+
+        return item;
+    }
+
+    /**
+     * 获取首部元素
+     *
+     * @return 队列首部元素
+     */
+    @Override
+    public Item peek() {
+        if (first == null) {
+            return null;
+        }
+
+        return first.getItem();
     }
 
     /**
@@ -101,4 +167,5 @@ public class Stack<Item> extends AbstractMyCollection<Item> implements Iterable<
             return nowNode.getItem();
         }
     }
+
 }
