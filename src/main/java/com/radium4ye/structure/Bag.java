@@ -82,8 +82,18 @@ public class Bag<Item> implements Iterable<Item> {
      *
      * @param <Item>
      */
-    @AllArgsConstructor
     private static class InnerIterator<Item> implements Iterator<Item> {
+
+        /**
+         * 构建一个新的节点，并将老节点设置进去
+         *
+         * @param node 需要遍历的开始节点
+         */
+        InnerIterator(Node<Item> node) {
+            //创建一个节点
+            this.nowNode = new Node<>();
+            this.nowNode.setNext(node);
+        }
 
         /**
          * 记录当前结点
