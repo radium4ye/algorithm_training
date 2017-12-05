@@ -2,15 +2,13 @@ package com.radium4ye.structure;
 
 import lombok.Data;
 
+import java.util.EmptyStackException;
 import java.util.Iterator;
 
 /**
- * 链表数据结构
- *
- * @author radium4ye
+ * @author Radium
  */
-@Data
-public class Bag<Item> extends MyCollection<Item> implements Iterable<Item> {
+public class Stack<Item> extends MyCollection<Item> implements Iterable<Item> {
 
     /**
      * 链表首结点
@@ -22,7 +20,7 @@ public class Bag<Item> extends MyCollection<Item> implements Iterable<Item> {
      *
      * @param item 元素
      */
-    public void add(Item item) {
+    public void push(Item item) {
         //创建一个节点
         Node<Item> node = new Node<>();
         node.setItem(item);
@@ -33,8 +31,24 @@ public class Bag<Item> extends MyCollection<Item> implements Iterable<Item> {
         }
 
         //重新设置首节点，并修改集合大小
-        first = node;
         count++;
+        first = node;
+    }
+
+    /**
+     * 弹出一个元素
+     *
+     * @return 栈顶的元素
+     */
+    public Item pop() {
+        if (first == null) {
+            throw new EmptyStackException();
+        }
+
+        Item item = first.getItem();
+        first = first.getNext();
+        count--;
+        return item;
     }
 
     /**
@@ -87,5 +101,4 @@ public class Bag<Item> extends MyCollection<Item> implements Iterable<Item> {
             return nowNode.getItem();
         }
     }
-
 }
