@@ -1,6 +1,5 @@
 package com.radium4ye.structure;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.util.Iterator;
