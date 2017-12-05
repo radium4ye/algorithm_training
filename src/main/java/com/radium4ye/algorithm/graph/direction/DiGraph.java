@@ -52,9 +52,8 @@ public class DiGraph {
      * @param verticesEnd   结束顶点
      */
     public void addEdge(int verticesStart, int verticesEnd) {
-        if (verticesEnd >= vertices || verticesStart >= vertices) {
-            throw new IllegalArgumentException("顶点数超出边界限");
-        }
+        validateVertex(verticesEnd);
+        validateVertex(verticesStart);
 
         Bag<Integer> bag = adjacent[verticesStart];
         bag.add(verticesEnd);
@@ -106,5 +105,17 @@ public class DiGraph {
             s.append("\t\n");
         }
         return s.toString();
+    }
+
+    /**
+     * 校验顶点的有效性
+     *
+     * @param v 带校验的顶点
+     * @throws IllegalArgumentException 非法参数，顶点不正确
+     */
+    private void validateVertex(int v) throws IllegalArgumentException {
+        if (v < 0 || v >= vertices) {
+            throw new IllegalArgumentException("顶点 " + v + " 不在 0 和 " + (vertices - 1) + " 之间");
+        }
     }
 }
