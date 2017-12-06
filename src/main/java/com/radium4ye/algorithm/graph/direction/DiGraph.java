@@ -1,5 +1,6 @@
 package com.radium4ye.algorithm.graph.direction;
 
+import com.radium4ye.algorithm.graph.BaseGraph;
 import com.radium4ye.structure.Bag;
 import lombok.Getter;
 
@@ -9,17 +10,7 @@ import lombok.Getter;
  * @author radium4ye
  */
 @Getter
-public class DiGraph {
-
-    /**
-     * 顶点数
-     */
-    private final int vertices;
-
-    /**
-     * 边数
-     */
-    private int edge;
+public class DiGraph extends BaseGraph {
 
     /**
      * 顶点的领边
@@ -32,7 +23,7 @@ public class DiGraph {
      * @param vertices 图中顶点总数
      */
     public DiGraph(int vertices) {
-        this.vertices = vertices;
+        super(vertices);
         this.edge = 0;
         this.adjacent = new Bag[vertices];
 
@@ -104,15 +95,4 @@ public class DiGraph {
         return s.toString();
     }
 
-    /**
-     * 校验顶点的有效性
-     *
-     * @param v 带校验的顶点
-     * @throws IllegalArgumentException 非法参数，顶点不正确
-     */
-    private void validateVertex(int v) throws IllegalArgumentException {
-        if (v < 0 || v >= vertices) {
-            throw new IllegalArgumentException("顶点 " + v + " 不在 0 和 " + (vertices - 1) + " 之间");
-        }
-    }
 }
