@@ -18,7 +18,7 @@ public class DiGraphTest {
     private DiGraph diGraph;
 
     @Before
-    public void init() {
+    public void setUp() {
         diGraph = new DiGraph(10);
         diGraph.addEdge(0, 1);
         diGraph.addEdge(2, 0);

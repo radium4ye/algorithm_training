@@ -14,7 +14,7 @@ public class GraphTest {
     private Graph graph = new Graph();
 
     @Before
-    public void before() {
+    public void setUp() {
         graph.addEdge(1, 2);
         graph.addEdge(1, 0);
         graph.addEdge(6, 7);
