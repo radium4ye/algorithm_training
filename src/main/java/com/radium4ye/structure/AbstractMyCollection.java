@@ -31,7 +31,7 @@ public abstract class AbstractMyCollection<Item> implements Collection<Item> {
      */
     @Override
     public boolean isEmpty() {
-        return count != 0;
+        return count == 0;
     }
 
     @Override

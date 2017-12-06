@@ -8,7 +8,7 @@ import java.util.Iterator;
 /**
  * @author Radium
  */
-public class Stack<Item> extends AbstractMyCollection<Item> implements Iterable<Item> {
+public class MyStack<Item> extends AbstractMyCollection<Item> implements Iterable<Item> {
 
     /**
      * 链表首结点
