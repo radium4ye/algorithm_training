@@ -30,7 +30,7 @@ public class Topological {
     /**
      * 逆后序
      */
-    private MyStack<Integer> oppositionPostOrder;
+    private MyStack<Integer> reversePostOrder;
 
     /**
      * 是否检查过
@@ -44,7 +44,7 @@ public class Topological {
     public Topological(DiGraph diGraph) {
         preOrder = new MyQueue<>();
         postOrder = new MyQueue<>();
-        oppositionPostOrder = new MyStack<>();
+        reversePostOrder = new MyStack<>();
         marked = new boolean[diGraph.getVertices()];
 
         for (int i = 0; i < diGraph.getVertices(); i++) {
@@ -71,7 +71,7 @@ public class Topological {
                     }
                 });
         postOrder.add(vertices);
-        oppositionPostOrder.push(vertices);
+        reversePostOrder.push(vertices);
     }
 
 }

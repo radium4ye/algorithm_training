@@ -26,7 +26,7 @@ public abstract class BaseSearch {
     protected Map<Integer,Integer> edgeTo;
 
     /**
-     * 该节点和 v 节点是否联通
+     * 该节点和 v 节点是否连通
      * @param v
      */
     public boolean hasPathTo(int v){
@@ -39,7 +39,7 @@ public abstract class BaseSearch {
      * @return 路径栈
      */
     public Stack<Integer> pathTo(int aimVertices){
-        //不联通
+        //不连通
         if(!hasPathTo(aimVertices)){
             return null;
         }

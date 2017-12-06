@@ -53,7 +53,7 @@ public class DoubleColor {
         //没被标记的点 进行标记
         marked.put(point, true);
 
-        //遍历该点的联通节点
+        //遍历该点的连通节点
         for (int next : g.adj(point)) {
 
             //如果该顶点没被遍历过就进行递归搜索，反正检查顶点颜色是否符合要求

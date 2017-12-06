@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 /**
  * 深度优先算法
- * 用于计算 点与点之间是否联通 | 联通子图的数量
+ * 用于计算 点与点之间是否连通 | 连通子图的数量
  *
  * @author Radium
  */
@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class DepthFirstSearch extends BaseSearch {
 
     /**
-     * 该联通子图中顶点数量数量
+     * 该连通子图中顶点数量数量
      */
     private int verticesCount;
 
