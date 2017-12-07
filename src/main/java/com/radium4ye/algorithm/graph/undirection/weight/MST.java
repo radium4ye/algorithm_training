@@ -6,6 +6,11 @@ import lombok.Getter;
 
 /**
  * 最小生成树
+ * 自己实现
+ * 将所有边进行降序排序，并遍历一边。选择为连通的边
+ *
+ * 空间和 vertices + edge 成正比
+ * 时间主要和排序算法有关
  *
  * @author radium4ye
  */
@@ -37,7 +42,7 @@ public class MST {
         Edge[] array = new Edge[myStack.size()];
         array = myStack.toArray(array);
 
-        //降序排序，获得最小边
+        //降序排序，获得最小边 性能低下
         SelectSort.sort(array, false);
         //选择边数
         int selectNum = 0;
