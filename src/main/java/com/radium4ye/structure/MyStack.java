@@ -13,7 +13,7 @@ public class MyStack<Item> extends AbstractMyCollection<Item> implements Iterabl
     /**
      * 链表首结点
      */
-    private Node<Item> first;
+    private Node<Item> head;
 
     /**
      * 添加元素
@@ -26,13 +26,13 @@ public class MyStack<Item> extends AbstractMyCollection<Item> implements Iterabl
         node.setItem(item);
 
         //如果集合首节点不会空，就将新的节点指向该结点
-        if (first != null) {
-            node.setNext(first);
+        if (head != null) {
+            node.setNext(head);
         }
 
         //重新设置首节点，并修改集合大小
         count++;
-        first = node;
+        head = node;
     }
 
     /**
@@ -41,12 +41,12 @@ public class MyStack<Item> extends AbstractMyCollection<Item> implements Iterabl
      * @return 栈顶的元素
      */
     public Item pop() {
-        if (first == null) {
+        if (head == null) {
             throw new EmptyStackException();
         }
 
-        Item item = first.getItem();
-        first = first.getNext();
+        Item item = head.getItem();
+        head = head.getNext();
         count--;
         return item;
     }
@@ -64,7 +64,7 @@ public class MyStack<Item> extends AbstractMyCollection<Item> implements Iterabl
 
     @Override
     public Iterator<Item> iterator() {
-        return new InnerIterator<>(first);
+        return new InnerIterator<>(head);
     }
 
     /**
@@ -100,5 +100,24 @@ public class MyStack<Item> extends AbstractMyCollection<Item> implements Iterabl
             nowNode = nowNode.getNext();
             return nowNode.getItem();
         }
+    }
+
+    @Override
+    public Object[] toArray() {
+        Object[] result = new Object[count];
+        int i = 0;
+        for (Node<Item> x = head; x != null; x = x.next) {
+            result[i++] = x.item;
+        }
+        return result;
+    }
+
+    @Override
+    public <T> T[] toArray(T[] result) {
+        int i = 0;
+        for (Node<Item> x = head; x != null; x = x.next) {
+            result[i++] = (T) x.item;
+        }
+        return result;
     }
 }
