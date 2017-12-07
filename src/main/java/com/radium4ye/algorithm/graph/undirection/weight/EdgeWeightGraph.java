@@ -62,7 +62,7 @@ public class EdgeWeightGraph extends BaseGraph {
      *
      * @return 全部边
      */
-    public Iterable<Edge> edges() {
+    public MyStack<Edge> edges() {
         MyStack<Edge> temp = new MyStack<>();
 
         //遍历所有顶点
@@ -77,11 +77,11 @@ public class EdgeWeightGraph extends BaseGraph {
                 //获取另一个顶点
                 int anotherVertices = edgeTemp.getAnotherVertices(i);
                 if (anotherVertices > i) {
-                    temp.add(edgeTemp);
+                    temp.push(edgeTemp);
                 } else if (anotherVertices == i) {
                     //存在自环 只添加一边
                     if (j % 2 == 0) {
-                        temp.add(edgeTemp);
+                        temp.push(edgeTemp);
                     }
                 }
                 j++;
