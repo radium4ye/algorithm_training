@@ -13,7 +13,7 @@ import lombok.Getter;
  * 时间和 edge * log edge 成正比
  * 时间主要和排序算法有关
  *
- * 可能形成回环，导致生成多个连通子图
+ * 导致生成多个连通子图，缺少这个几个连通子图之间互联的边
  *
  * @author radium4ye
  */
@@ -47,7 +47,7 @@ public class MyMST {
         HeapPriorityQueue<Edge> queue = new HeapPriorityQueue<>(myStack.size(), (o1, o2) -> -1 * o1.compareTo(o2));
         //没实现这个方法 (ノಠ益ಠ)ノ彡┻━┻
 //        queue.addAll(myStack);
-        while (!myStack.isEmpty()){
+        while (!myStack.isEmpty()) {
             queue.offer(myStack.pop());
         }
 
