@@ -5,7 +5,7 @@ import com.radium4ye.structure.MyStack;
 import lombok.Getter;
 
 /**
- * 最小生成树
+ * 最小生成树，算法有误
  * 自己实现，感觉在最后的遍的时候，会遍历很多无用的数据
  * 将所有边进行降序排序，并遍历一边。选择为连通的边
  * <p>
@@ -13,8 +13,11 @@ import lombok.Getter;
  * 时间和 edge * log edge 成正比
  * 时间主要和排序算法有关
  *
+ * 可能形成自环，导致生成多个连通子图
+ *
  * @author radium4ye
  */
+@Deprecated
 @Getter
 public class MyMST {
 
