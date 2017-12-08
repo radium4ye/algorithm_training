@@ -1,11 +1,13 @@
 package com.radium4ye.algorithm.graph.undirection.weight;
 
+import com.radium4ye.algorithm.graph.UnionFind;
 import com.radium4ye.algorithm.sort.pq.HeapPriorityQueue;
 import com.radium4ye.structure.MyStack;
 import lombok.Getter;
 
 /**
- * 最小生成树，算法有误
+ * 最小生成树
+ * Kruskal
  * 自己实现，感觉在最后的遍的时候，会遍历很多无用的数据
  * 将所有边进行降序排序，并遍历一边。选择为连通的边
  * <p>
@@ -17,15 +19,14 @@ import lombok.Getter;
  *
  * @author radium4ye
  */
-@Deprecated
 @Getter
-public class MyMST {
+public class KruskalMST {
 
     /**
      * 已经检查过的顶点
      * 已经连通的顶点
      */
-    private boolean[] marked;
+    private UnionFind unionFind;
 
     /**
      * 选择的边
@@ -37,8 +38,8 @@ public class MyMST {
      *
      * @param graph 无向加权图
      */
-    public MyMST(EdgeWeightGraph graph) {
-        marked = new boolean[graph.getVertices()];
+    public KruskalMST(EdgeWeightGraph graph) {
+        unionFind = new UnionFind(graph.getVertices());
         selectEdges = new MyStack<>();
 
         //获取全部边，并进行降序排序
@@ -56,10 +57,9 @@ public class MyMST {
         while (!queue.isEmpty()) {
             Edge edge = queue.poll();
             //判断该边的两个顶点是否连通
-            if (!marked[edge.getVertices1()] || !marked[edge.getVertices2()]) {
+            if (!unionFind.connected(edge.getVertices1(),edge.getVertices2())) {
+                unionFind.union(edge.getVertices1(),edge.getVertices2());
 
-                marked[edge.getVertices1()] = true;
-                marked[edge.getVertices2()] = true;
                 selectNum++;
                 selectEdges.push(edge);
 

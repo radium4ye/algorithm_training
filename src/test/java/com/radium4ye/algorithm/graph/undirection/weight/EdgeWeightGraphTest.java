@@ -32,7 +32,7 @@ public class EdgeWeightGraphTest {
     static int allWeight2 = 0 ;
     @Test
     public void mst() throws Exception {
-        MyMST mst = new MyMST(graph);
+        KruskalMST mst = new KruskalMST(graph);
 
         mst.getSelectEdges().forEach(edge -> {
             allWeight += edge.getWeight();
