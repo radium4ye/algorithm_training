@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
+import static org.junit.Assert.*;
 /**
  * @author radium4ye
  */
@@ -15,7 +16,7 @@ public class EdgeWeightGraphTest {
 
     @Before
     public void setUp() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(EdgeWeightGraphTest.class.getClassLoader().getResourceAsStream("1000EWG.txt")));
+        BufferedReader br = new BufferedReader(new InputStreamReader(EdgeWeightGraphTest.class.getClassLoader().getResourceAsStream("mediumEWG.txt")));
         Integer vertices = Integer.valueOf(br.readLine());
         graph = new EdgeWeightGraph(vertices);
         Integer edge = Integer.valueOf(br.readLine());
@@ -34,7 +35,6 @@ public class EdgeWeightGraphTest {
         MyMST mst = new MyMST(graph);
 
         mst.getSelectEdges().forEach(edge -> {
-            System.out.println(edge);
             allWeight += edge.getWeight();
         });
     }
@@ -43,11 +43,9 @@ public class EdgeWeightGraphTest {
     public void prim() throws Exception {
         PrimMST mst = new PrimMST(graph);
         mst.getSelect().forEach(edge -> {
-            System.out.println(edge);
             allWeight2 += edge.getWeight();
         });
-        System.out.println(allWeight);
-        System.out.println(allWeight2);
+        assertEquals(allWeight,allWeight2);
     }
 
 
