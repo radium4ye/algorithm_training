@@ -23,7 +23,7 @@ public class EdgeWeightGraphTest {
         String line;
         while ((line = br.readLine()) != null) {
             String[] data = line.split("\\s");
-            graph.addEdge(new Edge(Integer.valueOf(data[0]),Integer.valueOf(data[1]),Double.valueOf(data[0])));
+            graph.addEdge(new Edge(Integer.valueOf(data[0]),Integer.valueOf(data[1]),Double.valueOf(data[2])));
 
         }
     }
