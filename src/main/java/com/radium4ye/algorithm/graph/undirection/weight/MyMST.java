@@ -13,7 +13,7 @@ import lombok.Getter;
  * 时间和 edge * log edge 成正比
  * 时间主要和排序算法有关
  *
- * 可能形成自环，导致生成多个连通子图
+ * 可能形成回环，导致生成多个连通子图
  *
  * @author radium4ye
  */
