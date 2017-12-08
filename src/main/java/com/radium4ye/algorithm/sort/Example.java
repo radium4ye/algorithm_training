@@ -46,4 +46,21 @@ public class Example {
         array[index1] = array[index2];
         array[index2] = temp;
     }
+
+    /**
+     * 交换数组中元素位置
+     *
+     * @param array  数组
+     * @param index1 元素1的索引
+     * @param index2 元素2的索引
+     */
+    public static void exchange(int[] array, int index1, int index2) {
+        if (index1 == index2) {
+            return;
+        }
+
+        int temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
+    }
 }

@@ -1,11 +1,8 @@
 package com.radium4ye.algorithm.sort.pq;
 
-import lombok.Data;
 import lombok.Getter;
 
 import java.util.Comparator;
-
-import static com.radium4ye.algorithm.sort.Example.exchange;
 
 /**
  * 默认最大堆排序
@@ -14,16 +11,16 @@ import static com.radium4ye.algorithm.sort.Example.exchange;
  */
 public class HeapPriorityQueue<Key extends Comparable<Key>> extends BasePriorityQueue<Key> {
 
-    private static final int INIT_SIZE = 10;
+    protected static final int INIT_SIZE = 10;
 
     /**
      * 底层数组大小
      * 包含 0 索引
      */
-    private int arraySize;
+    protected int arraySize;
 
     @Getter
-    private transient Object[] elementData;
+    protected transient Object[] elementData;
 
     /**
      * 比较器
@@ -44,7 +41,7 @@ public class HeapPriorityQueue<Key extends Comparable<Key>> extends BasePriority
         arraySize = initSize;
     }
 
-    private void sink(int index) {
+    protected void sink(int index) {
 
         //获取左右子节点的索引
         int leftChildren = index * 2;
@@ -83,7 +80,7 @@ public class HeapPriorityQueue<Key extends Comparable<Key>> extends BasePriority
      *
      * @param index 节点索引
      */
-    private void swim(int index) {
+    protected void swim(int index) {
         int parentIndex = index / 2;
 
         //如果父节点小于1 ，所以该节点已经到堆顶了
@@ -103,7 +100,7 @@ public class HeapPriorityQueue<Key extends Comparable<Key>> extends BasePriority
     /**
      * 使底层数组增长
      */
-    private void grow() {
+    protected void grow() {
         arraySize = arraySize << 1;
         Object[] temp = new Object[arraySize];
         System.arraycopy(elementData, 0, temp, 0, elementData.length);
@@ -163,5 +160,22 @@ public class HeapPriorityQueue<Key extends Comparable<Key>> extends BasePriority
         } else {
             return key1.compareTo(key2);
         }
+    }
+
+    /**
+     * 交换数组中元素位置
+     *
+     * @param array  数组
+     * @param index1 元素1的索引
+     * @param index2 元素2的索引
+     */
+    protected void exchange(Object[] array, int index1, int index2) {
+        if (index1 == index2) {
+            return;
+        }
+
+        Object temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
     }
 }
