@@ -22,7 +22,7 @@ public class HeapPriorityQueueTest {
         //判断是否有序
         Integer last = queue.poll();
         while (queue.peek() != null){
-            assertEquals(last >= queue.peek(),true);
+            assertTrue(last >= queue.peek());
             last = queue.poll();
         }
     }

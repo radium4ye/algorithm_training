@@ -40,7 +40,7 @@ public class GraphTest {
     public void dfs() {
         DepthFirstSearch search = new DepthFirstSearch(graph, 0);
 
-        assertEquals(search.hasPathTo(8), true);
+        assertTrue(search.hasPathTo(8));
 
         java.util.Stack<Integer> stack = search.pathTo(9);
         int[] temp = new int[stack.size()];
@@ -56,7 +56,7 @@ public class GraphTest {
     public void bfs() {
         BreadthFirstSearch search = new BreadthFirstSearch(graph, 0);
 
-        assertEquals(search.hasPathTo(8), true);
+        assertTrue(search.hasPathTo(8));
 
         java.util.Stack<Integer> stack = search.pathTo(9);
         int[] temp = new int[stack.size()];
