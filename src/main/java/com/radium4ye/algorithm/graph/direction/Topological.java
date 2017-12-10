@@ -1,5 +1,6 @@
 package com.radium4ye.algorithm.graph.direction;
 
+import com.radium4ye.algorithm.graph.direction.weight.EdgeWeightDiGraph;
 import com.radium4ye.structure.MyQueue;
 import com.radium4ye.structure.MyStack;
 import lombok.Getter;
@@ -39,9 +40,28 @@ public class Topological {
 
     /**
      * 构建拓扑排序
+     *
      * @param diGraph
      */
     public Topological(DiGraph diGraph) {
+        preOrder = new MyQueue<>();
+        postOrder = new MyQueue<>();
+        reversePostOrder = new MyStack<>();
+        marked = new boolean[diGraph.getVertices()];
+
+        for (int i = 0; i < diGraph.getVertices(); i++) {
+            if (!marked[i]) {
+                dfs(diGraph, i);
+            }
+        }
+    }
+
+    /**
+     * 构建拓扑排序
+     *
+     * @param diGraph
+     */
+    public Topological(EdgeWeightDiGraph diGraph) {
         preOrder = new MyQueue<>();
         postOrder = new MyQueue<>();
         reversePostOrder = new MyStack<>();
@@ -66,6 +86,27 @@ public class Topological {
         //遍历该节点的所有邻节点
         diGraph.adj(vertices)
                 .forEach(nextVertices -> {
+                    if (!marked[nextVertices]) {
+                        dfs(diGraph, nextVertices);
+                    }
+                });
+        postOrder.add(vertices);
+        reversePostOrder.push(vertices);
+    }
+
+    /**
+     * 进行深度优先搜索
+     *
+     * @param diGraph  有向图
+     * @param vertices 起始顶点
+     */
+    private void dfs(EdgeWeightDiGraph diGraph, final int vertices) {
+        marked[vertices] = true;
+        preOrder.add(vertices);
+        //遍历该节点的所有邻节点
+        diGraph.adj(vertices)
+                .forEach(nextEdge -> {
+                    int nextVertices = nextEdge.getTo();
                     if (!marked[nextVertices]) {
                         dfs(diGraph, nextVertices);
                     }
