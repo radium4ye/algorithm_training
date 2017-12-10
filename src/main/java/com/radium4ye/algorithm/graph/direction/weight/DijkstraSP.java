@@ -1,19 +1,30 @@
 package com.radium4ye.algorithm.graph.direction.weight;
 
-import com.radium4ye.algorithm.sort.pq.IndexHeapPQ;
 import com.radium4ye.structure.MyStack;
 import lombok.Getter;
 
 /**
  * 通过 Dijkstra 算法生成最短路径
- * 可解决权重非负的加权有向图
+ * 局限性：无法处理边的权重为负数的情况
+ * <p>
+ * 这种排序算法是利用贪心算法的方法通过局部最优 达到全局最优
  * e.g. 网络路由（链路状态算法）成本计算
  *
  * @author radium4ye
  */
 public class DijkstraSP {
 
-    IndexHeapPQ<DiEdge> indexHeapPQ = new IndexHeapPQ<>();
+
+    /**
+     * {@code null} 表示不可达
+     * 记录当前数到所有节点的最小边
+     */
+    private DiEdge[] toEdge;
+
+    /**
+     * 记录到该点的总费用
+     */
+    private double[] weight;
 
     /**
      * 记录当前节点是否被标记过
@@ -34,6 +45,13 @@ public class DijkstraSP {
      */
     public DijkstraSP(EdgeWeightDiGraph diGraph, int startVertices) {
         marked = new boolean[diGraph.getVertices()];
+        toEdge = new DiEdge[diGraph.getVertices()];
+        weight = new double[diGraph.getVertices()];
+
+        for (int i = 0; i < diGraph.getVertices(); i++) {
+            weight[i] = Double.POSITIVE_INFINITY;
+        }
+        weight[startVertices] = 0;
         relax(diGraph, startVertices);
     }
 
@@ -44,31 +62,43 @@ public class DijkstraSP {
             //目标顶点
             int toVertices = diEdge.getTo();
 
-            //如果目标顶点被检查过了，就不进行重复检查
+            //如果目标顶点被检查过了，就不进行重复检查 回环
             if (marked[toVertices]) {
                 return;
             }
 
-            DiEdge old = indexHeapPQ.getByIndex(toVertices);
+            //如果到该边有更短路径 更新
+            if (weight[diEdge.getForm()] + diEdge.getWeight() < weight[diEdge.getTo()]) {
+                toEdge[diEdge.getTo()] = diEdge;
+                //路径费用为当前边的费用 + 到该边起始节点的费用
+                weight[diEdge.getTo()] = weight[diEdge.getForm()] + diEdge.getWeight();
 
-            //取最小值的边
-            if (old == null) {
-                indexHeapPQ.offer(toVertices, diEdge);
-            } else if (old.getWeight() > diEdge.getWeight()) {
-                indexHeapPQ.change(toVertices, diEdge);
             }
+
         });
 
-        DiEdge diEdge;
-        do {
-            diEdge = indexHeapPQ.poll();
-            if (diEdge == null) {
-                return;
-            }
-        } while (marked[diEdge.getTo()]);
 
-        select.push(diEdge);
-        relax(diGraph, diEdge.getTo());
+        //选择所有边中的最短边
+        int minIndex = -1;
+        double minWeight = Double.POSITIVE_INFINITY;
+        for (int i = 0; i < diGraph.getVertices(); i++) {
+
+            //如果目标顶点被检查过了(已经加入了)
+            if (marked[i]) {
+                continue;
+            }
+
+            if (weight[i] < minWeight) {
+                minIndex = i;
+            }
+        }
+
+        if (minIndex != -1) {
+            DiEdge minDiEdge = toEdge[minIndex];
+            select.push(minDiEdge);
+
+            relax(diGraph, minDiEdge.getTo());
+        }
 
     }
 }
