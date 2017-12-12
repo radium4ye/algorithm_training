@@ -25,7 +25,7 @@ public class DijkstraSP {
      * 记录到该点的总费用
      */
     @Getter
-    private Double[] toDist;
+    private Double[] distTo;
 
     /**
      * 记录当前节点是否被标记过
@@ -47,12 +47,12 @@ public class DijkstraSP {
     public DijkstraSP(EdgeWeightDiGraph diGraph, int startVertices) {
         marked = new boolean[diGraph.getVertices()];
         toEdge = new DiEdge[diGraph.getVertices()];
-        toDist = new Double[diGraph.getVertices()];
+        distTo = new Double[diGraph.getVertices()];
 
         for (int i = 0; i < diGraph.getVertices(); i++) {
-            toDist[i] = Double.POSITIVE_INFINITY;
+            distTo[i] = Double.POSITIVE_INFINITY;
         }
-        toDist[startVertices] = 0.0;
+        distTo[startVertices] = 0.0;
         relax(diGraph, startVertices);
     }
 
@@ -69,10 +69,10 @@ public class DijkstraSP {
             }
 
             //如果到该边有更短路径 更新
-            if (toDist[diEdge.getFrom()] + diEdge.getWeight() < toDist[diEdge.getTo()]) {
+            if (distTo[diEdge.getFrom()] + diEdge.getWeight() < distTo[diEdge.getTo()]) {
                 toEdge[diEdge.getTo()] = diEdge;
                 //路径费用为当前边的费用 + 到该边起始节点的费用
-                toDist[diEdge.getTo()] = toDist[diEdge.getFrom()] + diEdge.getWeight();
+                distTo[diEdge.getTo()] = distTo[diEdge.getFrom()] + diEdge.getWeight();
 
             }
 
@@ -89,7 +89,7 @@ public class DijkstraSP {
                 continue;
             }
 
-            if (toDist[i] < minWeight) {
+            if (distTo[i] < minWeight) {
                 minIndex = i;
             }
         }
