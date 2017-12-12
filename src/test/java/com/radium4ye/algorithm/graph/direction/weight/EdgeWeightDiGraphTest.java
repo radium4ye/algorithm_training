@@ -10,10 +10,9 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.stream.Stream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+
 /**
  * @author radium4ye
  */
@@ -35,21 +34,23 @@ public class EdgeWeightDiGraphTest {
     }
 
     DijkstraSP dijkstraSP;
+
     @Test
     public void dijkstra() {
 
         dijkstraSP = new DijkstraSP(graph, 0);
-        Arrays.stream(dijkstraSP.getToDist()).forEach(System.out::println);
+//        Arrays.stream(dijkstraSP.getToDist()).forEach(System.out::println);
     }
 
     BellmanFordSP bellmanFordSP;
+
     @Test
     public void bellmanFord() {
-
+        dijkstraSP = new DijkstraSP(graph, 0);
         bellmanFordSP = new BellmanFordSP(graph, 0);
-        Arrays.stream(bellmanFordSP.getToDist()).forEach(System.out::println);
+//        Arrays.stream(bellmanFordSP.getToDist()).forEach(System.out::println);
 
-        assertArrayEquals(dijkstraSP.getToDist(),bellmanFordSP.getToDist());
+        assertArrayEquals(dijkstraSP.getToDist(), bellmanFordSP.getToDist());
     }
 
     @Test
@@ -64,7 +65,7 @@ public class EdgeWeightDiGraphTest {
             graph.addEdge(new DiEdge(Integer.valueOf(data[0]), Integer.valueOf(data[1]), Double.valueOf(data[2])));
         }
 
-        TopologicalSP topologicalSP = new TopologicalSP(graph,5);
+        TopologicalSP topologicalSP = new TopologicalSP(graph, 5);
         for (int i = 0; i < graph.getVertices(); i++) {
             System.out.println(i + ":" + topologicalSP.getToDist()[i]);
         }
