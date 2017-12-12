@@ -102,13 +102,13 @@ public class BellmanFordSP {
                 }
             }
 
-//            if (cost++ % graph.getVertices() == 0) {
+            if (cost++ % graph.getVertices() == 0) {
                 findNegativeCycle();
                 if (hasNegativeCycle()) {
                     //找到环 终止运算
                     return;
                 }
-//            }
+            }
         }
 
 
