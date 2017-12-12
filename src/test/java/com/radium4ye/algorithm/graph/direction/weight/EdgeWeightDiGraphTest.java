@@ -10,7 +10,10 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.stream.Stream;
 
+import static org.junit.Assert.*;
 /**
  * @author radium4ye
  */
@@ -31,10 +34,22 @@ public class EdgeWeightDiGraphTest {
         }
     }
 
+    DijkstraSP dijkstraSP;
     @Test
     public void dijkstra() {
-        DijkstraSP dijkstraSP = new DijkstraSP(graph, 0);
-        dijkstraSP.getSelect().forEach(System.out::println);
+
+        dijkstraSP = new DijkstraSP(graph, 0);
+        Arrays.stream(dijkstraSP.getToDist()).forEach(System.out::println);
+    }
+
+    BellmanFordSP bellmanFordSP;
+    @Test
+    public void bellmanFord() {
+
+        bellmanFordSP = new BellmanFordSP(graph, 0);
+        Arrays.stream(bellmanFordSP.getToDist()).forEach(System.out::println);
+
+        assertArrayEquals(dijkstraSP.getToDist(),bellmanFordSP.getToDist());
     }
 
     @Test
