@@ -12,6 +12,7 @@ import java.util.Queue;
 /**
  * Bellman-Ford 算法
  * 局限性：无负权重环
+ * 优势：适用面广
  * <p>
  * 对每个顶点进行顺序松弛即可
  *
