@@ -68,10 +68,10 @@ public class DijkstraSP {
             }
 
             //如果到该边有更短路径 更新
-            if (weight[diEdge.getForm()] + diEdge.getWeight() < weight[diEdge.getTo()]) {
+            if (weight[diEdge.getFrom()] + diEdge.getWeight() < weight[diEdge.getTo()]) {
                 toEdge[diEdge.getTo()] = diEdge;
                 //路径费用为当前边的费用 + 到该边起始节点的费用
-                weight[diEdge.getTo()] = weight[diEdge.getForm()] + diEdge.getWeight();
+                weight[diEdge.getTo()] = weight[diEdge.getFrom()] + diEdge.getWeight();
 
             }
 

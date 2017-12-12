@@ -36,7 +36,7 @@ public class EdgeWeightDiGraph extends BaseGraph {
      */
     public void addEdge(DiEdge edge) {
         //校验顶点有效性
-        int v1 = edge.getForm();
+        int v1 = edge.getFrom();
         int v2 = edge.getTo();
         validateVertex(v1);
         validateVertex(v2);

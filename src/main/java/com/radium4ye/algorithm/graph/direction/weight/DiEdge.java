@@ -13,7 +13,7 @@ public class DiEdge implements Comparable<DiEdge> {
     /**
      * 起始顶点
      */
-    private int form;
+    private int from;
 
     /**
      * 结束顶点
@@ -28,12 +28,12 @@ public class DiEdge implements Comparable<DiEdge> {
     /**
      * 构造一条边
      *
-     * @param form   起始顶点
+     * @param from   起始顶点
      * @param to     结束顶点
      * @param weight 该边的权重
      */
-    public DiEdge(int form, int to, Double weight) {
-        this.form = form;
+    public DiEdge(int from, int to, Double weight) {
+        this.from = from;
         this.to = to;
         this.weight = weight;
     }

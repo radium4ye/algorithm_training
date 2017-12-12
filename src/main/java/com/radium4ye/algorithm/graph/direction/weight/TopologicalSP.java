@@ -52,7 +52,7 @@ public class TopologicalSP {
     }
 
     public void relax(DiEdge diEdge) {
-        int form = diEdge.getForm(), to = diEdge.getTo();
+        int form = diEdge.getFrom(), to = diEdge.getTo();
         double weight = diEdge.getWeight() + toDist[form];
 
         if (weight < toDist[to]) {
