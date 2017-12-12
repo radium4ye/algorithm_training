@@ -10,6 +10,7 @@ import org.junit.Test;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 
 import static org.junit.Assert.assertArrayEquals;
 
@@ -22,13 +23,13 @@ public class EdgeWeightDiGraphTest {
 
     @Before
     public void setUp() throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(EdgeWeightGraphTest.class.getClassLoader().getResourceAsStream("tinyEWG.txt")));
+        BufferedReader br = new BufferedReader(new InputStreamReader(EdgeWeightGraphTest.class.getClassLoader().getResourceAsStream("tinyEWDn.txt")));
         Integer vertices = Integer.valueOf(br.readLine());
         graph = new EdgeWeightDiGraph(vertices);
         Integer edge = Integer.valueOf(br.readLine());
         String line;
         while ((line = br.readLine()) != null) {
-            String[] data = line.split("\\s");
+            String[] data = line.split("\\s+");
             graph.addEdge(new DiEdge(Integer.valueOf(data[0]), Integer.valueOf(data[1]), Double.valueOf(data[2])));
         }
     }
@@ -39,18 +40,18 @@ public class EdgeWeightDiGraphTest {
     public void dijkstra() {
 
         dijkstraSP = new DijkstraSP(graph, 0);
-//        Arrays.stream(dijkstraSP.getToDist()).forEach(System.out::println);
+//        Arrays.stream(dijkstraSP.getDistTo()).forEach(System.out::println);
     }
 
     BellmanFordSP bellmanFordSP;
 
     @Test
     public void bellmanFord() {
-        dijkstraSP = new DijkstraSP(graph, 0);
+//        dijkstraSP = new DijkstraSP(graph, 0);
         bellmanFordSP = new BellmanFordSP(graph, 0);
-//        Arrays.stream(bellmanFordSP.getToDist()).forEach(System.out::println);
+        Arrays.stream(bellmanFordSP.getDistTo()).forEach(System.out::println);
 
-        assertArrayEquals(dijkstraSP.getToDist(), bellmanFordSP.getToDist());
+//        assertArrayEquals(dijkstraSP.getDistTo(), bellmanFordSP.getDistTo());
     }
 
     @Test
