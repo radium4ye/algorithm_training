@@ -1,7 +1,5 @@
 package com.radium4ye.algorithm.sort.pq;
 
-import com.sun.tools.internal.ws.wsdl.framework.NoSuchEntityException;
-
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -45,7 +43,7 @@ public abstract class BasePriorityQueue<Key extends Comparable<Key>> implements 
     public boolean add(Key key) {
         boolean result = offer(key);
         if (key == null) {
-            throw new NoSuchEntityException("queue is empty");
+            throw new NoSuchElementException("queue is empty");
         } else {
             return result;
         }
@@ -64,7 +62,7 @@ public abstract class BasePriorityQueue<Key extends Comparable<Key>> implements 
     public Key remove() {
         Key key = poll();
         if (key == null) {
-            throw new NoSuchEntityException("queue is empty");
+            throw new NoSuchElementException("queue is empty");
         } else {
             return key;
         }
@@ -83,7 +81,7 @@ public abstract class BasePriorityQueue<Key extends Comparable<Key>> implements 
     public Key element() {
         Key key = peek();
         if (key == null) {
-            throw new NoSuchEntityException("queue is empty");
+            throw new NoSuchElementException("queue is empty");
         } else {
             return key;
         }
