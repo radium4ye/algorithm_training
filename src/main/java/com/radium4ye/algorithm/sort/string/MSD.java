@@ -89,10 +89,6 @@ public class MSD {
 
     /**
      * 获取 s 字符串在 d 位置的字符
-     *
-     * @param s
-     * @param d
-     * @return
      */
     public static int charAt(String s, int d) {
         return s.length() > d ? s.charAt(d) : 0;
