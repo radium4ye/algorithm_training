@@ -7,7 +7,10 @@ package com.radium4ye.algorithm.sort.string;
  */
 public class MSD {
 
+    //字符集的大小
     public static final int R = 256;
+    //切换算法的阈值
+    public static final int M = 0;
 
     /**
      * 目前限定的单字节的支付，暂支持 ASCII 表中的字符
@@ -38,6 +41,9 @@ public class MSD {
             return;
         }
         //小数组可以切换排序方式
+        if (hi - M < lo) {
+            //TODO 待实现
+        }
 
         int[] count = new int[R + 1];
 
