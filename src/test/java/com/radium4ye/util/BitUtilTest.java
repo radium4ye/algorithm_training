@@ -2,12 +2,33 @@ package com.radium4ye.util;
 
 import org.junit.Test;
 
+import java.util.Random;
+
 import static org.junit.Assert.*;
 
 /**
  * @author radium4ye
  */
 public class BitUtilTest {
+    @Test
+    public void multiply() throws Exception {
+        Random random = new Random();
+        for (int i = 0; i < 1000000; i++) {
+            int random1 = random.nextInt(10000);
+            int random2 = random.nextInt(10000);
+            assertEquals(BitUtil.multiply(random1, random2), random1 * random2);
+        }
+    }
+
+    @Test
+    public void add() throws Exception {
+        Random random = new Random();
+        for (int i = 0; i < 1000; i++) {
+            int random1 = random.nextInt(Integer.MAX_VALUE >> 2);
+            int random2 = random.nextInt(Integer.MAX_VALUE >> 2);
+            assertEquals(BitUtil.add(random1, random2), random1 + random2);
+        }
+    }
 
     @Test
     public void exchangeBit() throws Exception {

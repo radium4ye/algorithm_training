@@ -49,20 +49,89 @@ public class BitUtil {
 
     /**
      * 已 2 为低数取对数
-     * @param num   参数
+     *
+     * @param num 参数
      * @return 对数
      */
     public static int log2(int num) {
-        return log(num,2);
+        return log(num, 2);
     }
 
     /**
      * 已 2 为低数取对数
-     * @param num       参数
-     * @param baseNum   底数
+     *
+     * @param num     参数
+     * @param baseNum 底数
      * @return 对数
      */
-    public static int log(int num,int baseNum) {
+    public static int log(int num, int baseNum) {
         return (int) Math.ceil(Math.log(num) / Math.log(baseNum));
+    }
+
+    /**
+     * 将2个数字进行乘法运算
+     */
+    public static int multiply(int num1, int num2) {
+
+        int temp = 0;
+        int r = 1;
+        while (r <= num2){
+            //判断 num2 在 i 这位的数字是否为0
+            if((num2 & r ) > 0){
+                temp = add(temp,num1 << log2(r));
+            }
+            r = r << 1;
+        }
+
+        return temp;
+    }
+
+    /**
+     * 将2个数字进行加法运算
+     */
+    public static int add(int num1, int num2) {
+        if (num1 < 0 || num2 < 0) {
+            throw new IllegalArgumentException("暂不支持负数");
+        }
+
+        if (num1 > (Integer.MAX_VALUE >> 2) || num2 > (Integer.MAX_VALUE >> 2)) {
+            throw new IllegalArgumentException("超过计算最大值：" + (Integer.MAX_VALUE >> 2));
+        }
+        //取最大值
+        int max = (num1 >= num2) ? num1 : num2;
+        //表示第几位相乘
+        int r = 1;
+
+        //是否有进位
+        boolean advance = false;
+        int result = 0;
+
+        //如果当前运行的位置比最大值小，说明运行没结果继续运算
+        while (r <= max || advance) {
+            int x = num1 & r;
+            int y = num2 & r;
+
+            //进行异或运算
+            int b = x ^ y;
+
+            if (b > 0) {
+                //有进位 将结果置0 继续运算
+                if (advance) {
+                    b = 0;
+                }
+            } else {
+                if (advance) {
+                    b = r;
+                }
+                advance = x > 0;
+
+            }
+
+            result = result | b;
+            r = r << 1;
+        }
+
+
+        return result;
     }
 }
