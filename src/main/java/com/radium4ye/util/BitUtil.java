@@ -99,7 +99,7 @@ public class BitUtil {
         }
         //取最大值
         int max = (num1 >= num2) ? num1 : num2;
-        //表示第几位相乘
+        //表示第几位相加
         int r = 1;
 
         //是否有进位
