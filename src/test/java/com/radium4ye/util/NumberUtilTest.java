@@ -8,6 +8,17 @@ import static org.junit.Assert.*;
  * @author radium4ye
  */
 public class NumberUtilTest {
+    @Test
+    public void stringAdd() throws Exception {
+        System.out.println(NumberUtil.stringAdd("6900","2100"));
+    }
+
+
+    @Test
+    public void stringMultiply() throws Exception {
+
+        System.out.println(NumberUtil.stringMultiply("321","123"));
+    }
 
 
     @Test

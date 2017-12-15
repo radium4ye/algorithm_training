@@ -148,4 +148,122 @@ public class NumberUtil {
         }
 
     }
+
+    /**
+     * 进行 String 的乘法运算
+     */
+    public static String stringMultiply(String x, String y) {
+        if (x == null || y == null) {
+            return "";
+        }
+
+        //进行补位
+        int subtractResult = x.length() - y.length();
+        if (subtractResult < 0) {
+            StringBuilder xBuilder = new StringBuilder(x);
+            for (int i = 0; i < -subtractResult; i++) {
+                xBuilder.insert(0, "0");
+            }
+            x = xBuilder.toString();
+        }
+
+        if (subtractResult > 0) {
+            StringBuilder builder = new StringBuilder(y);
+            for (int i = 0; i < subtractResult; i++) {
+                builder.insert(0, "0");
+            }
+            y = builder.toString();
+        }
+
+        String result = mapMultiply(x, y);
+
+        return result;
+    }
+
+    /**
+     * 字符相乘  拆分成一个个小乘法
+     */
+    private static String mapMultiply(String x, String y) {
+        if (x.length() == 1 && y.length() == 1) {
+            return String.valueOf((x.charAt(0) - '0') * (y.charAt(0) - '0'));
+        }
+
+        //进行划分成小问题
+        int xlen = x.length() / 2;
+        int ylen = y.length() / 2;
+
+        String xh = x.substring(0, xlen);
+        String xl = x.substring(xlen);
+        String yh = y.substring(0, ylen);
+        String yl = y.substring(ylen);
+
+        if("".equals(xh)){
+            xh = "0";
+        }
+        if("".equals(yh)){
+            yh = "0";
+        }
+
+        StringBuilder xhyh = new StringBuilder(mapMultiply(xh, yh));
+        for (int i = 0; i < (x.length() - xlen) + (y.length() - ylen); i++) {
+            xhyh.append("0");
+        }
+
+        StringBuilder xhyl = new StringBuilder(mapMultiply(xh, yl));
+        for (int i = 0; i < (x.length() - xlen); i++) {
+            xhyl.append("0");
+        }
+
+        StringBuilder xlyh = new StringBuilder(mapMultiply(xl, yh));
+        for (int i = 0; i < (y.length() - ylen); i++) {
+            xlyh.append("0");
+        }
+
+        String xlyl = mapMultiply(xl, yl);
+        //进行累加
+
+        String result = stringAdd(stringAdd(stringAdd(xhyh.toString(), xhyl.toString()), xlyh.toString()), xlyl);
+
+        return result;
+    }
+
+    /**
+     * 字符串加法
+     */
+    public static String stringAdd(String x, String y) {
+        //是否有进位
+        int advance = 0;
+        //现在累加的位置，低位开始
+        int position = 0;
+
+        int maxLen = Math.max(x.length(), y.length());
+
+        StringBuilder result = new StringBuilder();
+        StringBuilder xReverse = new StringBuilder(x).reverse();
+        StringBuilder yReverse = new StringBuilder(y).reverse();
+        //如有没加完，或者有进位
+        while (position < maxLen || advance > 0) {
+            int xp = 0;
+            if (x.length() > position) {
+                xp = xReverse.charAt(position) - '0';
+            }
+
+            int yp = 0;
+            if (y.length() > position) {
+                yp = yReverse.charAt(position) - '0';
+            }
+
+            int xpyp = yp + xp + advance;
+            if (xpyp >= 10) {
+                xpyp = xpyp - 10;
+                advance = 1;
+            }else {
+                advance = 0;
+            }
+            result.insert(0, xpyp);
+            position ++;
+        }
+
+        return result.toString();
+    }
 }
