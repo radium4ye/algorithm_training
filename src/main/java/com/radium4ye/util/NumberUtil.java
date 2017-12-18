@@ -7,6 +7,10 @@ package com.radium4ye.util;
  */
 public class NumberUtil {
 
+    public static final char ZERO = '0';
+    public static final String ADD = "+";
+    public static final String REDUCE = "-";
+
     /**
      * ascii 转数字（十进制）
      *
@@ -150,11 +154,32 @@ public class NumberUtil {
     }
 
     /**
-     * 进行 String 的乘法运算
+     * 进行 String 的整形乘法运算
      */
     public static String stringMultiply(String x, String y) {
         if (x == null || y == null) {
             return "";
+        }
+        //标记计算后的符号位置
+        boolean symbol = true;
+
+        {
+            //去除符号
+            while (x.startsWith(ADD)){
+                x = x.substring(1);
+            }
+            while (x.startsWith(REDUCE)){
+                x = x.substring(1);
+                symbol = !symbol;
+            }
+
+            while (y.startsWith(ADD)){
+                y = y.substring(1);
+            }
+            while (y.startsWith(REDUCE)){
+                y = y.substring(1);
+                symbol = !symbol;
+            }
         }
 
         //进行补位
@@ -176,8 +201,19 @@ public class NumberUtil {
         }
 
         String result = mapMultiply(x, y);
+        StringBuilder sb = new StringBuilder(result);
 
-        return result;
+        //首部去除多余的0
+        while (sb.charAt(0) == ZERO && sb.length() > 1){
+            sb = sb.deleteCharAt(0);
+        }
+
+        //添加符号
+        if(!symbol){
+            sb = sb.insert(0,"-");
+        }
+
+        return sb.toString();
     }
 
     /**
