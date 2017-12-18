@@ -5,6 +5,43 @@ package com.radium4ye.util;
  */
 public class ArrayUtil {
 
+
+    /**
+     * 将数组进行旋转
+     * 空间复杂度O(1)
+     * 时间复杂度O(n)
+     *
+     * @param array       原始数组
+     * @param rotateStart 旋转开始位置
+     */
+    public static Object[] rotate(Object[] array, int rotateStart) {
+
+        //将数组分割成2部分
+        int path1 = 0;
+        int pathLen1 = rotateStart;
+
+        int path2 = rotateStart;
+        int pathLen2 = array.length - rotateStart;
+
+        while (true) {
+            if (pathLen1 == pathLen2) {
+                //直接互换
+                exchange(array, path1, path2, pathLen1);
+                break;
+            } else if (pathLen1 > pathLen2) {
+                //将path2 和 path1首部进行互换
+                exchange(array, path1, path2, pathLen2);
+                path1 = path1 + pathLen2;
+                pathLen1 = pathLen1 - pathLen2;
+            } else {
+                //将path1 和 path2尾部进行互换
+                exchange(array, path1, path2 + pathLen2 - pathLen1, pathLen1);
+                pathLen2 -= pathLen1;
+            }
+        }
+        return array;
+    }
+
     /**
      * 空间复杂度O(1) 在原数组按照给定的序列排成新的数组
      *
@@ -51,13 +88,13 @@ public class ArrayUtil {
             //获取 i 在 oldPosition 中的索引
             int indexOldPosition = -1;
             for (int j = 0; j < oldPosition.length; j++) {
-                if(oldPosition[j] == i){
+                if (oldPosition[j] == i) {
                     indexOldPosition = j;
                     break;
                 }
             }
 
-            int ltCount = countLt(oldPosition,indexOldPosition,i);
+            int ltCount = countLt(oldPosition, indexOldPosition, i);
 
             change = indexOldPosition + ltCount;
             temp = changeArray[change];
@@ -112,5 +149,39 @@ public class ArrayUtil {
         }
 
         return result;
+    }
+
+    /**
+     * 交换数组中元素位置
+     *
+     * @param array  数组
+     * @param index1 元素1的索引
+     * @param index2 元素2的索引
+     */
+    public static void exchange(Object[] array, int index1, int index2, int len) {
+        if (index1 == index2) {
+            return;
+        }
+
+        for (int i = 0; i < len; i++) {
+            exchange(array, index1 + i, index2 + i);
+        }
+    }
+
+    /**
+     * 交换数组中元素位置
+     *
+     * @param array  数组
+     * @param index1 元素1的索引
+     * @param index2 元素2的索引
+     */
+    public static void exchange(Object[] array, int index1, int index2) {
+        if (index1 == index2) {
+            return;
+        }
+
+        Object temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
     }
 }

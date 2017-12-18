@@ -10,6 +10,11 @@ import static org.junit.Assert.*;
  * @author radium4ye
  */
 public class ArrayUtilTest {
+    @Test
+    public void rotate() throws Exception {
+        Integer[] array = new Integer[]{0,1,2,3,4,5,6,7};
+        System.out.println(Arrays.toString(ArrayUtil.rotate(array,2)));
+    }
 
     @Test
     public void changePosition() throws Exception {
