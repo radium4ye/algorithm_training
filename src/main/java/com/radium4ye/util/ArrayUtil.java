@@ -5,6 +5,91 @@ package com.radium4ye.util;
  */
 public class ArrayUtil {
 
+    /**
+     * 螺旋打印数组
+     */
+    public static void spiralPrint(int[][] array) {
+        int xMin = 0, xMax = array.length - 1,
+                yMin = 0, yMax = array[0].length - 1;
+
+        int startX = 0, startY = 0;
+
+        /**
+         * {@code true 向右|向下}
+         * {@code false 向左|向上}
+         */
+        boolean direction = true;
+        //是否水平
+        boolean horizontal = true;
+        while (true) {
+
+            System.out.print(array[startX][startY] + " ");
+
+            //退出循环
+            if(xMax <= xMin && yMax <= yMin){
+                break;
+            }
+
+            if (horizontal) {
+                if (direction) {
+                    //水平向右边
+
+
+                    if (startY < yMax) {
+                        startY++;
+                    } else {
+                        startX++;
+                        horizontal = !horizontal;
+                        xMin++;
+                    }
+
+                } else {
+                    //水平向左
+
+                    if (startY > yMin) {
+                        startY--;
+                    } else {
+                        startX--;
+                        horizontal = !horizontal;
+                        xMax--;
+                    }
+
+                }
+
+            } else {
+
+                if (direction) {
+                    //竖直向下
+
+                    if (startX < xMax) {
+                        startX++;
+                    } else {
+                        startY--;
+                        direction = !direction;
+                        horizontal = !horizontal;
+                        yMax--;
+                    }
+
+                } else {
+
+                    //竖直向上
+
+                    if (startX > xMin) {
+                        startX--;
+                    } else {
+                        startY++;
+                        direction = !direction;
+                        horizontal = !horizontal;
+                        yMin++;
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
 
     /**
      * 将数组进行旋转
