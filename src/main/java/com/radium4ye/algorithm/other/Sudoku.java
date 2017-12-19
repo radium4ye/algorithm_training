@@ -1,6 +1,9 @@
 package com.radium4ye.algorithm.other;
 
 /**
+ * 数独
+ * 利用了启发式搜索
+ *
  * @author radium4ye
  */
 public class Sudoku {
@@ -65,12 +68,13 @@ public class Sudoku {
      * @return
      */
     public boolean setSudokuBoard(int x, int y) {
-
+        //该行填写满了，填写下一行
         if (y >= COLUMN_NUM) {
             y = 0;
             x++;
         }
 
+        //所有行都填写好了，就说明整个棋盘都填写完毕
         if (x >= ROW_NUM) {
             return true;
         }
