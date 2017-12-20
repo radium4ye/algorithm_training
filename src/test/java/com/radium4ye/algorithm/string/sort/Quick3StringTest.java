@@ -1,5 +1,6 @@
-package com.radium4ye.algorithm.sort.string;
+package com.radium4ye.algorithm.string.sort;
 
+import com.radium4ye.algorithm.string.sort.Quick3String;
 import org.junit.Test;
 
 import java.util.stream.Collectors;

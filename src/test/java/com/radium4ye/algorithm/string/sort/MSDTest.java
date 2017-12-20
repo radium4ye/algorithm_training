@@ -1,5 +1,6 @@
-package com.radium4ye.algorithm.sort.string;
+package com.radium4ye.algorithm.string.sort;
 
+import com.radium4ye.algorithm.string.sort.MSD;
 import org.junit.Test;
 
 import static org.junit.Assert.*;

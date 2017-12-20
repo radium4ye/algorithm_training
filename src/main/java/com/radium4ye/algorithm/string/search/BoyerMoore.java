@@ -1,4 +1,4 @@
-package com.radium4ye.algorithm.search.string;
+package com.radium4ye.algorithm.string.search;
 
 /**
  * BM 字符匹配算法

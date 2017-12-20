@@ -1,4 +1,4 @@
-package com.radium4ye.algorithm.sort.string;
+package com.radium4ye.algorithm.string.sort;
 
 import static com.radium4ye.algorithm.sort.Example.exchange;
 

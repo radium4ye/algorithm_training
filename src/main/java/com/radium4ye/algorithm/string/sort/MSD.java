@@ -1,4 +1,4 @@
-package com.radium4ye.algorithm.sort.string;
+package com.radium4ye.algorithm.string.sort;
 
 /**
  * 高位优先字符排序
