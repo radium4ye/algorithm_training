@@ -9,16 +9,16 @@ import lombok.Data;
  */
 public class LinkedList<T> {
 
-     private Node<T> head;
+    private Node<T> head;
 
-    public boolean add(T t){
+    public boolean add(T t) {
         Node<T> node = new Node<>();
         node.setValue(t);
-        if (head == null){
+        if (head == null) {
             head = node;
-        }else {
+        } else {
             Node<T> temp = head;
-            while (temp.next != null){
+            while (temp.next != null) {
                 temp = temp.next;
             }
             temp.next = node;
@@ -30,23 +30,24 @@ public class LinkedList<T> {
     /**
      * 翻转
      */
-    public void reverse(){
-        if(head != null){
+    public void reverse() {
+        if (head != null) {
             reverse(head);
         }
     }
 
     /**
      * 翻转
+     *
      * @param node 待翻转的节点
      */
-    private void reverse(Node node){
+    private void reverse(Node node) {
 
-        if(node.next != null){
+        if (node.next != null) {
             reverse(node.next);
             node.next.next = node;
             node.next = null;
-        }else {
+        } else {
             head = node;
         }
 
@@ -56,7 +57,7 @@ public class LinkedList<T> {
 
 
     @Data
-    public static class Node<T>{
+    public static class Node<T> {
         private T value;
         private Node<T> next;
     }
