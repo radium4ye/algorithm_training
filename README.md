@@ -20,3 +20,4 @@ Quick3String | 高位优先三向快排
 BoyerMoore | BM 字符匹配算法
 RabinKarp  | Rabin-Karp 指纹字符串查找
 KMPByDFA | 通过确认有限状态机模拟 KMP 算法
+KMP | KMP 算法
