@@ -5,14 +5,14 @@ import java.util.Map;
 
 /**
  * Knuth-Morris-pratt 算法
- * 通过确认有限状态机实现
+ * 通过确认有限状态机模拟
  *
  * @author radium4ye
  */
 public class KMPByDFA {
 
     /**
-     * 有限状态机
+     * 确认有限状态机
      */
     private Map<Character, int[]> dfa = new HashMap<>();
 
