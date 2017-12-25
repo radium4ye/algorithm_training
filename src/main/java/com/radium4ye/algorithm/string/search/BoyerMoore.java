@@ -32,12 +32,9 @@ public class BoyerMoore {
         for (char i = 0; i < right.length; i++) {
             right[i] = -1;
         }
-        int point = pattern.length();
-        while (point > 0) {
-            char patternChar = pattern.charAt(--point);
-            if (point > right[patternChar]) {
-                right[patternChar] = point;
-            }
+
+        for (int i = 0; i < pattern.length(); i++) {
+            right[pattern.charAt(i)] = i;
         }
 
         //目标字符的位置
