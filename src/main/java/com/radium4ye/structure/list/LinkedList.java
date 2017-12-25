@@ -54,7 +54,36 @@ public class LinkedList<T> {
 
     }
 
+    /**
+     * 判断链表是否包含环
+     * 时间复杂度O(n)
+     * 空间复杂度O(1)
+     *
+     * @return
+     */
+    public boolean hasCycle() {
+        //定义两个指针，一个指针一次走1个节点，另一个指针一次走2个节点
+        if(head == null){
+            return false;
+        }
+        Node point1 = head;
+        Node point2 = head;
 
+        while (true){
+            //如果出现空节点，说明链表已经走完了
+            if(point2.next == null || point2.next.next == null){
+                return false;
+            }
+            point2 = point2.next.next;
+            point1 = point1.next;
+
+            //如果两个指针相遇说明有环
+            if(point1 == point2){
+                return true;
+            }
+        }
+
+    }
 
     @Data
     public static class Node<T> {
