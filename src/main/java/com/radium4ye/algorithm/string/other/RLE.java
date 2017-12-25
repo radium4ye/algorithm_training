@@ -1,4 +1,4 @@
-package com.radium4ye.algorithm.string;
+package com.radium4ye.algorithm.string.other;
 
 /**
  * Run-length encoding

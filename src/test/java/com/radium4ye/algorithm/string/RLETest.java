@@ -1,5 +1,6 @@
 package com.radium4ye.algorithm.string;
 
+import com.radium4ye.algorithm.string.other.RLE;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
