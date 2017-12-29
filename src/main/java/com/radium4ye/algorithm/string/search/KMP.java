@@ -27,6 +27,7 @@ public class KMP {
 
     /**
      * 进行字符串匹配
+     *
      * @param target
      * @return
      */
@@ -36,19 +37,20 @@ public class KMP {
         int pNum = 0;
 
         //对整个目标字符串进行匹配
-        for (int tNum = 0; tNum < tLen ; tNum++) {
+        for (int tNum = 0; tNum < tLen; tNum++) {
 
             //如果匹配失败，而且 pNum > 0  就将指针移动到 pNum长度最长子串位置 再继续进行匹配
-            while (pNum > 0 && pat.charAt(pNum) != target.charAt(tNum)) {
+            boolean sign = pat.charAt(pNum) == target.charAt(tNum);
+            while (pNum > 0 && (!sign)) {
                 pNum = pi[pNum];
             }
 
-            if (pat.charAt(pNum) == target.charAt(tNum)) {
-                pNum ++;
+            if (sign) {
+                pNum++;
             }
 
             //匹配到最后一个字符了
-            if(pNum == pLen){
+            if (pNum == pLen) {
                 return tNum - pLen + 1;
             }
         }
