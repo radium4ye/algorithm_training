@@ -2,3 +2,4 @@
 *.iml
 out
 target
+!/src/test/java/com/radium4ye/util/EliasGammaUtilTest.java
