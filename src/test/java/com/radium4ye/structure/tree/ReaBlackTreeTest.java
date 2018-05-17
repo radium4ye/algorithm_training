@@ -19,6 +19,7 @@ public class ReaBlackTreeTest {
         reaBlackTree.put(2,PRESENT);
         reaBlackTree.put(3,PRESENT);
 
+        reaBlackTree.delete(3);
 
     }
 

@@ -17,7 +17,7 @@ public class ReaBlackTree<Key extends Comparable<Key>, Value> {
     /**
      * 根节点
      */
-    private Node<Key, Value> root;
+    private Node root;
 
 
     /**
@@ -46,7 +46,7 @@ public class ReaBlackTree<Key extends Comparable<Key>, Value> {
      * @param key      键
      * @param value    值
      */
-    private Node<Key, Value> put(Node<Key, Value> baseNode, Key key, Value value) {
+    private Node put(Node baseNode, Key key, Value value) {
 
         //如果当前节点不会空，继续向下
         if (baseNode != null) {
@@ -62,7 +62,7 @@ public class ReaBlackTree<Key extends Comparable<Key>, Value> {
 
         } else {
             //新建节点
-            Node<Key, Value> node = new Node<>();
+            Node node = new Node();
             node.setKey(key);
             node.setValue(value);
             node.setColor(RED);
@@ -74,7 +74,77 @@ public class ReaBlackTree<Key extends Comparable<Key>, Value> {
     }
 
 
-    private void delete(Key key) {
+    /**
+     * 删除节点
+     *
+     * @param key
+     */
+    public void delete(Key key) {
+        if (key == null) {
+            throw new IllegalArgumentException("传入的键不能为null");
+        }
+        if (root == null) {
+            return;
+        }
+
+        //左右节点均不为红，将根节点变红，构成4节点准备
+        if (!isRed(root.left) && !isRed(root.right)) {
+            root.color = RED;
+        }
+
+        root = delete(root, key);
+
+        if (root != null) {
+            root.color = BLACK;
+        }
+    }
+
+
+    private Node delete(Node baseNode, Key key) {
+
+        //需要将该节点变成 一个 3、4节点 才可进行删除操作，不然会破坏黑键结构
+        if (baseNode.left != null && !isRed(baseNode.left)) {
+            baseNode.color = !baseNode.color;
+            baseNode.left.color = !baseNode.left.color;
+            baseNode.right.color = !baseNode.right.color;
+        }
+
+        int compareResult = baseNode.getKey().compareTo(key);
+
+        if (compareResult == 0) {
+            if (baseNode.right == null && baseNode.left == null) {
+                return null;
+            }
+        } else if (compareResult > 0) {
+            //在左子节点中
+            if (isRed(baseNode.left)) {
+                baseNode.left = delete(baseNode.left, key);
+            } else {
+                //todo
+            }
+        } else {
+            //在右子节点中
+            if (isRed(baseNode.right)) {
+                baseNode.right = delete(baseNode.right, key);
+            } else {
+                //右子节点不为红，转化当前节点和右边节点的颜色
+                baseNode = rightRotate(baseNode);
+                baseNode.right = delete(baseNode.right, key);
+            }
+        }
+
+        baseNode = checkStructure(baseNode);
+        return baseNode;
+    }
+
+    public void deleteMin() {
+
+
+    }
+
+    public Node deleteMin(Node node) {
+
+        return node;
     }
 
 
@@ -83,7 +153,7 @@ public class ReaBlackTree<Key extends Comparable<Key>, Value> {
      *
      * @param node
      */
-    private Node<Key, Value> checkStructure(Node<Key, Value> node) {
+    private Node checkStructure(Node node) {
 
         //右子节点为红，而左子节点不为红
         if (isRed(node.right) && !isRed(node.left)) {
@@ -97,9 +167,7 @@ public class ReaBlackTree<Key extends Comparable<Key>, Value> {
 
         //左右节点都是红，进行颜色转化
         if (isRed(node.left) && isRed(node.right)) {
-            node.left.color = BLACK;
-            node.right.color = BLACK;
-            node.color = RED;
+            flipColors(node);
         }
 
         return node;
@@ -120,8 +188,8 @@ public class ReaBlackTree<Key extends Comparable<Key>, Value> {
      * @param node
      * @return
      */
-    private Node<Key, Value> leftRotate(Node<Key, Value> node) {
-        Node<Key, Value> temp = node.right;
+    private Node leftRotate(Node node) {
+        Node temp = node.right;
         node.setRight(temp.left);
         temp.setLeft(node);
 
@@ -138,8 +206,8 @@ public class ReaBlackTree<Key extends Comparable<Key>, Value> {
      * @param node
      * @return
      */
-    private Node<Key, Value> rightRotate(Node<Key, Value> node) {
-        Node<Key, Value> temp = node.left;
+    private Node rightRotate(Node node) {
+        Node temp = node.left;
         node.setLeft(temp.right);
         temp.setRight(node);
 
@@ -150,14 +218,24 @@ public class ReaBlackTree<Key extends Comparable<Key>, Value> {
         return temp;
     }
 
+    /**
+     * 转化颜色，用于传递红节点
+     *
+     * @param h
+     */
+    private void flipColors(Node h) {
+        h.color = !h.color;
+        h.left.color = !h.left.color;
+        h.right.color = !h.right.color;
+    }
 
     @Data
-    @ToString(exclude = {"left","right"})
-    private static class Node<Key extends Comparable<Key>, Value> {
+    @ToString(exclude = {"left", "right"})
+    private class Node {
         private Key key;
         private Value value;
-        private Node<Key, Value> left;
-        private Node<Key, Value> right;
+        private Node left;
+        private Node right;
         /**
          * @code false 黑节点
          * @code true  红节点

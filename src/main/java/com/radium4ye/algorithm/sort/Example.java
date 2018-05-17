@@ -7,23 +7,23 @@ import java.util.stream.Stream;
  */
 public class Example {
 
-    public static void sort(Comparable[] comparables){
+    public static void sort(Comparable[] comparables) {
 
     }
 
-    public static boolean less(Comparable c1,Comparable c2){
+    public static boolean less(Comparable c1, Comparable c2) {
         return c1.compareTo(c2) < 0;
     }
 
-    public static void show(Comparable[] a){
+    public static void show(Comparable[] a) {
         Stream.of(a).forEach(item -> System.out.print(item + " "));
         System.out.println();
     }
 
-    public static boolean isSorted(Comparable[] a){
+    public static boolean isSorted(Comparable[] a) {
 
         for (int i = 1; i < a.length; i++) {
-            if(less(a[i],a[i-1])){
+            if (less(a[i], a[i - 1])) {
                 return false;
             }
         }
@@ -62,5 +62,16 @@ public class Example {
         int temp = array[index1];
         array[index1] = array[index2];
         array[index2] = temp;
+    }
+
+    /**
+     * 翻转数组
+     *
+     * @param array 数组
+     */
+    public static void reverse(Object[] array, int start, int end) {
+        for (int i = 0; i < (end - start + 1) / 2; i++) {
+            exchange(array, start + i, end - i);
+        }
     }
 }

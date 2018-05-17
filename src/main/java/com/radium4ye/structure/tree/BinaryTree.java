@@ -8,25 +8,25 @@ import lombok.ToString;
 /**
  * @author radium4ye
  */
-public class BinaryTree<T extends Comparable<T>> {
+public class BinaryTree<Key extends Comparable<Key>> {
 
 
-    private Node<T> head;
+    private Node head;
 
-    public boolean add(T t) {
-        Node<T> node = new Node<>();
-        node.setValue(t);
+    public boolean add(Key key) {
+        Node node = new Node();
+        node.setKey(key);
 
         if (head == null) {
             head = node;
             return true;
         }
 
-        Node<T> temp = head;
+        Node temp = head;
 
 
         while (true) {
-            if (t.compareTo(temp.value) > 0) {
+            if (key.compareTo(temp.key) > 0) {
                 if (temp.right == null) {
                     temp.right = node;
                     return true;
@@ -40,6 +40,74 @@ public class BinaryTree<T extends Comparable<T>> {
                 temp = temp.left;
             }
         }
+    }
+
+    /**
+     * 删除节点T
+     *
+     * @param t
+     */
+    public void delete(Key t) {
+        if(t == null){
+           throw new IllegalArgumentException("删除的参数不能为空");
+        }
+
+        if(head == null){
+            return;
+        }
+
+        head = delete(head,t);
+    }
+
+    private Node delete(Node node,Key key) {
+        int compareResult = key.compareTo(node.key);
+
+        if(compareResult == 0){
+
+            if(node.left == null && node.right == null){
+                node = null;
+            }else if(node.left == null){
+                node = node.right;
+            }else if(node.right == null){
+                node = node.left;
+            }else {
+                //如果均不为空，找右子节点的后继
+                Node temp = chooseMinLeftNullNode(node.right);
+                temp.left = node.left;
+                temp.right = node.right;
+                node = temp;
+            }
+
+        }else if (compareResult < 0){
+            node.left = delete(node.left,key);
+        }else {
+            node.right = delete(node.right,key);
+        }
+
+
+        return node;
+    }
+
+    /**
+     * 查找最小的左边子树为空的节点
+     * @param node
+     * @return
+     */
+    private Node chooseMinLeftNullNode(Node node) {
+
+        Node parent = null;
+        while (node.left != null){
+            parent = node;
+            node = node.left;
+        }
+
+        //如果父亲节点不为空
+        //将该节点的右节点 替换成当前位置
+        if(parent != null){
+            parent.left = node.right;
+        }
+
+        return node;
     }
 
 
@@ -81,12 +149,12 @@ public class BinaryTree<T extends Comparable<T>> {
      */
     public void printMorris() {
 
-        Node<T> now = head;
+        Node now = head;
 
         while (now != null) {
 
             //获取该节点的前序节点，如果该节点的右子节点为空，将其指向自身
-            Node<T> pre = findPreNode(now);
+            Node pre = findPreNode(now);
 
             if (pre != null) {
                 if (pre.getRight() == null) {
@@ -116,13 +184,13 @@ public class BinaryTree<T extends Comparable<T>> {
      * @param node 节点
      * @return 前序节点
      */
-    public Node<T> findPreNode(Node<T> node) {
+    public Node findPreNode(Node node) {
         //空节点
         if (node == null || node.getLeft() == null) {
             return null;
         }
 
-        Node<T> temp = node.getLeft();
+        Node temp = node.getLeft();
         while (true) {
 
             //如果右节点为空，或者指向本身，返回该节点
@@ -138,14 +206,10 @@ public class BinaryTree<T extends Comparable<T>> {
 
 
     @Data
-    @ToString(of = "value")
-    public static class Node<T> {
-        private T value;
-        private Node<T> left;
-        private Node<T> right;
-
-        public T getValue() {
-            return value;
-        }
+    @ToString(of = "key")
+    public class Node {
+        private Key key;
+        private Node left;
+        private Node right;
     }
 }
