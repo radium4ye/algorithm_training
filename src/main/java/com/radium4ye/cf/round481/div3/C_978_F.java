@@ -11,8 +11,10 @@ public class C_978_F {
         int n = s.nextInt();
         int k = s.nextInt();
 
+        long[] result = new long[n];
+
         //技能
-        List<Skill> list = new ArrayList<>();
+        List<Skill> list = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
             Skill skill = new Skill(s.nextInt(), i);
             list.add(skill);
@@ -22,61 +24,37 @@ public class C_978_F {
         for (int i = 0; i < k; i++) {
             int x = s.nextInt() - 1;
             int y = s.nextInt() - 1;
-            recordQuarrel(x, y);
+            Skill skillx = list.get(x);
+            Skill skilly = list.get(y);
+
+            if (skillx.value < skilly.value) {
+                result[y] --;
+            }else if(skilly.value < skillx.value){
+                result[x] --;
+            }
+
         }
 
         list.sort(Comparator.comparing(o -> o.value));
-
-        //输出结果
-        int[] result = new int[n];
-        for (int i = 0; i < n; i++) {
+        for (int i = 1; i < n; i++) {
             Skill skill = list.get(i);
 
-            int count = i;
-            //遍历0到i之间的程序猿
-            for (int j = i - 1; j >= 0; j--) {
-                Skill skillJ = list.get(j);
-                if (skillJ.value >= skill.value || quarrel(skill.position, skillJ.position)) {
-                    count--;
-                }
-            }
+            long count = list.subList(0,i)
+                    .parallelStream()
+                    .filter(skill1 -> skill1.value < skill.value)
+                    .count();
 
-            result[skill.position] = count;
+            result[skill.position] += count;
         }
 
+
+
+
+        //输出结果
         for (int i = 0; i < n; i++) {
             System.out.printf(result[i] + " ");
         }
     }
-
-    /**
-     * 记录争吵
-     *
-     * @param x
-     * @param y
-     */
-    public static void recordQuarrel(int x, int y) {
-        if (y < x) {
-            y = (x = y ^ x) ^ y;
-            x = y ^ x;
-        }
-
-        Set<Integer> set = quarrel.getOrDefault(x, new HashSet<>());
-        set.add(y);
-        quarrel.putIfAbsent(x, set);
-    }
-
-    public static boolean quarrel(int x, int y) {
-        if (y < x) {
-            y = (x = y ^ x) ^ y;
-            x = y ^ x;
-        }
-        Set<Integer> set = quarrel.getOrDefault(x, new HashSet<>());
-        return set.contains(y);
-    }
-
-    static HashMap<Integer, Set<Integer>> quarrel = new HashMap<>();
-
     public static class Skill {
         Integer value;
         Integer position;
@@ -85,7 +63,5 @@ public class C_978_F {
             this.value = value;
             this.position = position;
         }
-
-
     }
 }
