@@ -11,7 +11,8 @@ public class C_978_F {
         int n = s.nextInt();
         int k = s.nextInt();
 
-        long[] result = new long[n];
+        int[] result = new int[n];
+        int[] quarrelResult = new int[n];
 
         //技能
         List<Skill> list = new ArrayList<>(n);
@@ -28,33 +29,36 @@ public class C_978_F {
             Skill skilly = list.get(y);
 
             if (skillx.value < skilly.value) {
-                result[y] --;
-            }else if(skilly.value < skillx.value){
-                result[x] --;
+                quarrelResult[y]--;
+            } else if (skilly.value < skillx.value) {
+                quarrelResult[x]--;
             }
 
         }
 
         list.sort(Comparator.comparing(o -> o.value));
+
+        int preValue = list.get(0).value;
+        int preResult = 0;
         for (int i = 1; i < n; i++) {
             Skill skill = list.get(i);
 
-            long count = list.subList(0,i)
-                    .parallelStream()
-                    .filter(skill1 -> skill1.value < skill.value)
-                    .count();
+            if (preValue == skill.value) {
 
-            result[skill.position] += count;
+            } else {
+                preValue = skill.value;
+                preResult = i;
+            }
+
+            result[skill.position] = preResult;
         }
-
-
-
 
         //输出结果
         for (int i = 0; i < n; i++) {
-            System.out.printf(result[i] + " ");
+            System.out.printf((result[i] + quarrelResult[i]) + " ");
         }
     }
+
     public static class Skill {
         Integer value;
         Integer position;
