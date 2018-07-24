@@ -41,8 +41,9 @@ public class KMP {
 
             //如果匹配失败，而且 pNum > 0  就将指针移动到 pNum长度最长子串位置 再继续进行匹配
             boolean sign = pat.charAt(pNum) == target.charAt(tNum);
-            while (pNum > 0 && (!sign)) {
+            if (pNum > 0 && (!sign)) {
                 pNum = pi[pNum];
+                tNum --;
             }
 
             if (sign) {
